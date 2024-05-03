@@ -8,20 +8,18 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
 
+# files import
+from Link_reading import fb_groups_links
 
 # Open Chrome Browser
 options = Options()
 options.add_experimental_option("detach", True )
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-
-
-post_content = "https://xtralapz.com/top-5-lipstick-shades-for-every-skin-tone/"
-# post_content = "HELL0ooooo"
+post_content = "https://xtralapz.com/top-fashion-trends-for-2024-stay-ahead-of-the-curve/"
+# post_content = "Welcome Folks. We are starting the sale"
 
 post_content = str(post_content)
-
-
 
 def saveCookies(driver):
     # Get and store cookies after login
@@ -60,8 +58,8 @@ def fb_login():
     login_button = driver.find_element(By.NAME,"login")
     # u_0_5_M7
     # login
-    username.send_keys("username")
-    passward.send_keys("passward")
+    username.send_keys("lamex31183@hdrlog.com")
+    passward.send_keys("123123321")
 
     time.sleep(1)
     login_button.click()
@@ -75,44 +73,56 @@ cookies_exist = os.path.exists(cookies_file)
 print('In the end******************************')
 # Example: go to Facebook homepage
 # driver.get('https://facebook.com/')
-driver.get('https://web.facebook.com/groups/767293308836501')
 
-# If cookies exist, load them; otherwise, login
-if cookies_exist:
-    print('Loading cookies*************************')
-    loadCookies()
-else:
-    # Open Facebook login page
-    fb_login()
-    print('Saving cookies***************')
-    saveCookies(driver)
+count = 0
+for link in fb_groups_links:
+    driver.get(link)
+    time.sleep(2)
+    print('The Link about to visit: ',link)
 
-# Close the browser
-# driver.quit()
+    # If cookies exist, load them; otherwise, login
+    if cookies_exist:
+        print('Loading cookies*************************')
+        loadCookies()        
+            
+    else:
+        # Open Facebook login page
+        fb_login()
+        print('Saving cookies***************')
+        saveCookies(driver)
 
-time.sleep(1)
+    # Close the browser
+    # driver.quit()
 
-
-print('is about to post#####################')
-
-
-# # home opening
-# home = driver.find_element(By.XPATH,"//a[contains(@class,'x1i10hfl xjbqb8w')]")
-# home.click()
-# time.sleep(1)
-# whats on your mind cliking
-
-your_mind= driver.find_element(By.XPATH,"//span[text()='Write something...']")
-your_mind.click()
-time.sleep(2)
-
-# writing_post = driver.find_element(By.XPATH, "(//div[@contenteditable='true']//p)[2]")
-writing_post = driver.find_element(By.XPATH, "//div[@class='_1mf _1mj']")
-time.sleep(2)
-writing_post.send_keys(post_content)
-time.sleep(5)
+    time.sleep(1)
 
 
-post_button = driver.find_element(By.XPATH,"//span[text()='Post']")
-post_button.click()
+    print('is about to post#####################')
+
+
+    # # home opening
+    # home = driver.find_element(By.XPATH,"//a[contains(@class,'x1i10hfl xjbqb8w')]")
+    # home.click()
+    # time.sleep(1)
+    # whats on your mind cliking
+
+    your_mind= driver.find_element(By.XPATH,"//span[text()='Write something...']")
+    your_mind.click()
+    time.sleep(2)
+
+    # writing_post = driver.find_element(By.XPATH, "(//div[@contenteditable='true']//p)[2]")
+    writing_post = driver.find_element(By.XPATH, "//div[@class='_1mf _1mj']")
+    time.sleep(2)
+    writing_post.send_keys(post_content)
+    time.sleep(5)
+
+
+    post_button = driver.find_element(By.XPATH,"//span[text()='Post']")
+    post_button.click()
+    time.sleep(15)
+    print(count)
+    count = count + 1
+    # driver.quit()
+
+
 
